@@ -1,0 +1,7 @@
+build
+dist
+*.pyc
+src/*.pyc
+data/tmp
+tmp
+__pycache__

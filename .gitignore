@@ -3,5 +3,6 @@ dist
 *.pyc
 src/*.pyc
 data/tmp
+data.ignore
 tmp
 __pycache__

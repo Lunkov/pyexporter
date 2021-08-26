@@ -1,0 +1,43 @@
+name: news
+order: 1
+actions:
+  - rsync
+  - excel2db
+
+rsync:
+  src:
+  dest:
+
+db:
+  host: localhost
+  port: 17432
+  name: test-db
+  user: user
+  password: pwd
+  table: public.news
+  unique_field: id
+  fields:
+    id:
+      type: int
+      field: id
+    title:
+      type: string
+      field: name
+    author:
+      type: string
+    article:
+      type: string
+    images:
+      type: json
+
+excel:
+  filename: data/news/posts.xlsx
+  sheet: posts
+  row_title: 0
+  row_data: 1
+  fields:
+    - id
+    - name
+    - author
+    - article
+

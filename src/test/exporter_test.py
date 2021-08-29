@@ -9,7 +9,7 @@ from src.exporter import Exporter
 
 class TestExporter(unittest.TestCase):
 
-  def testExporter(self):
+  def testExporterXLS2DB(self):
     # Prepare Tests
     if os.path.exists("data/rsync/dir2/12345.txt"):
       os.remove("data/rsync/dir2/12345.txt")
@@ -37,8 +37,11 @@ class TestExporter(unittest.TestCase):
     pg = fm.newPostgre('pg')
     self.assertIsNotNone(pg.reconnect())
     
-    res = pg.getData('select * from public.news')
-    self.assertEqual(res, [(1, 'Title 1', 'anonymous', 'Article 1'),(2, 'Title 2', 'anonymous', 'Article 2'),(3, 'Title 3', 'author1', 'Article 3'),(4, 'Title 4', 'author2', 'Article 4')])
+    res = pg.getData('select id, title, author, article, main_image, images from public.news')
+    self.assertEqual(res, [(1, 'Title 1', 'anonymous', 'Article 1', '', ['data/news/images/n-01.jpg', 'data/news/images/n-02.jpg']),
+                           (2, 'Title 2', 'anonymous', 'Article 2', 'data/news/images/n-02.jpg', ['data/news/images/n-02.jpg']),
+                           (3, 'Title 3', 'author1', 'Article 3', '', ['']),
+                           (4, 'Title 4', 'author2', 'Article 4', 'data/news/images/n-03.jpg', [''])])
 
     self.assertEqual(os.path.exists("data/rsync/dir2/12345.txt"), True)
     os.remove("data/rsync/dir2/12345.txt")

@@ -11,7 +11,7 @@ class TestExcel2DBExport(unittest.TestCase):
 
   def testXLS2DB(self):
 
-    e = ExcelExport({ 'sheet': 'posts', 'filename': 'data/news/posts.xlsx', 'row_title': 0, 'row_data': 1, 'fields': ['id', 'name'] }, True)
+    e = ExcelExport({ 'excel' :{ 'sheet': 'posts', 'filename': 'data/news/posts.xlsx', 'row_title': 0, 'row_data': 1, 'fields': ['id', 'name'] }}, True)
     data, ok = e.run()
     self.assertEqual(ok, True)
     self.assertEqual(e.getColumns(), {'0': 'id', '4': 'name'})

@@ -27,8 +27,10 @@ db:
       type: string
     article:
       type: string
+    main_image:
+      type: string
     images:
-      type: json
+      type: strings
 
 excel:
   filename: data/news/posts.xlsx
@@ -40,4 +42,6 @@ excel:
     - name
     - author
     - article
+    - main_image
+    - images
 

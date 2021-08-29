@@ -123,8 +123,25 @@ class Postgre():
       return "'" + str(value) + "'"
     if not 'type' in self.config['fields'][key]:
       return "'" + str(value) + "'"
+
     if 'int' == self.config['fields'][key]['type']:
       return str(value)
+
+    if 'boolean' == self.config['fields'][key]['type']:
+      v = str(value).lower()
+      if v == '1' or v == 'on' or v == 'true' or v == 'yes' or v == 'y':
+        return 'TRUE'
+      return 'FALSE'
+
+    if 'strings' == self.config['fields'][key]['type']:
+      arstr = value.split("\n")
+      val = "'{"
+      for i, s in enumerate(arstr):
+        if i > 0:
+          val = val + ','
+        val = val + '"' + s + '"'
+      val = val + "}'"
+      return val
     
     return "'" + str(value) + "'"
 

@@ -16,7 +16,9 @@ class ExcelExport():
         verbose output
     """
     self.verbose = verbose
-    self.config = config
+    self.config = {}
+    if 'excel' in config:
+      self.config = config['excel']
     self.columns = {}
     self.row_column = 0
   

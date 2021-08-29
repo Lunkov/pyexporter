@@ -109,14 +109,14 @@ class Exporter(object):
 
   def _rsync(self, config):
     if 'rsync' in config:
-      d = DirsExport(config['rsync'], self.verbose)
+      d = DirsExport(config, self.verbose)
       d.run()
       return True
     return False
 
   def _excel2db(self, config):
     if 'excel' in config:
-      e = ExcelExport(config['excel'], self.verbose)
+      e = ExcelExport(config, self.verbose)
       data, ok = e.run()
       if ok:
         pg = Postgre(config['db'], self.verbose)

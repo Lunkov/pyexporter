@@ -5,8 +5,8 @@ actions:
   - excel2db
 
 rsync:
-  src:
-  dest:
+  src: data/rsync/dir1/
+  dest: data/rsync/dir2/
 
 db:
   host: localhost

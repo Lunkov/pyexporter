@@ -3,17 +3,18 @@
 
 import unittest
 import sys
+import os
 from pyfunctest.fmods import FMods
 from src.exporter import Exporter
 
 class TestExporter(unittest.TestCase):
 
   def testExporter(self):
-    # Load settings for export
-    exp = Exporter('data/etc', '', True)
-    exp.scan()
-    self.assertEqual(exp.count(), 1)
-    
+    # Prepare Tests
+    if os.path.exists("data/rsync/dir2/12345.txt"):
+      os.remove("data/rsync/dir2/12345.txt")
+    self.assertEqual(os.path.exists("data/rsync/dir2/12345.txt"), False)
+
     # Run PostgreSQL
     fm = FMods("data/mods/", "data/tmp/", True)
     fm.scan()
@@ -22,7 +23,13 @@ class TestExporter(unittest.TestCase):
     # Migration
     mgPg = fm.newMigrate('pg')
     self.assertTrue(mgPg.run())
-        
+
+    
+    # Load settings for export
+    exp = Exporter('data/etc', '', True)
+    exp.scan()
+    self.assertEqual(exp.count(), 1)
+    
     # Export News
     self.assertEqual(exp.run('news'), True)
     
@@ -33,6 +40,8 @@ class TestExporter(unittest.TestCase):
     res = pg.getData('select * from public.news')
     self.assertEqual(res, [(1, 'Title 1', 'anonymous', 'Article 1'),(2, 'Title 2', 'anonymous', 'Article 2'),(3, 'Title 3', 'author1', 'Article 3'),(4, 'Title 4', 'author2', 'Article 4')])
 
+    self.assertEqual(os.path.exists("data/rsync/dir2/12345.txt"), True)
+    os.remove("data/rsync/dir2/12345.txt")
 
   
 if __name__ == '__main__':

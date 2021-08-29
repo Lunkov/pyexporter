@@ -22,9 +22,17 @@ class DirsExport():
       self.config = config['rsync']
   
   def run(self):
-    if self.config:
-      sysrsync.run(source=self.config['src'],
-                   destination=self.config['dest'],
-                   sync_source_contents=True,
-                   exclusions=['.~*', 'Thumbs.db:encryptable'])
+    if self.config and 'src' in self.config and 'dest' in self.config:
+      options = ['-a']
+      if self.verbose:
+        print("DBG: RSYNC: '%s' => '%s'" % (self.config['src'], self.config['dest']))
+        options.append('-v')
+      sysrsync.run(source = self.config['src'],
+                   destination = self.config['dest'],
+                   sync_source_contents = True,
+                   exclusions = ['.~*', 'Thumbs.db:encryptable'],
+                   options = options,
+                   verbose = self.verbose)
+      return True
+    return False
 
